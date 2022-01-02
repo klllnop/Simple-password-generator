@@ -1,0 +1,47 @@
+import datetime
+import PySimpleGUI as sg
+import random
+import string
+
+dataatual = datetime.datetime.now()
+dataatualformatada = dataatual.strftime("%d-%m-%Y %H:%M:%S")
+
+#gerador
+
+tamanho = 8
+minusculas = string.ascii_lowercase
+maiusculas = string.ascii_uppercase
+numeros = string.digits
+simbolos = string.punctuation
+
+tudo = minusculas + maiusculas + numeros + simbolos
+passwordemlista = random.sample(tudo, tamanho)
+password = "".join(passwordemlista)
+
+#fimgerador
+
+#janela1
+def janela_inicial():
+    sg.theme("Reddit")
+    layout = [
+        [sg.Text(dataatualformatada)],
+        [sg.Button("Gerar palavra-passe")]
+    ]
+    return sg.Window("Inicio", layout=layout, finalize=True)
+
+#Criar as janelas iniciais (Dizer ao programa quais as janelas que queremos que abram quando iniciamos)
+
+janela1 = janela_inicial()
+
+#Criar loop para o PySimpleGUI estar sempre a ver o que está a acontecer na aplicacão
+while True:
+    window, event, values = sg.read_all_windows()
+
+#quando a janela for fechada
+    if window == janela1 and event == sg.WIN_CLOSED:
+        break
+
+#funcoes da janela
+        #função gerar password
+    if window == janela1 and event == "Gerar palavra-passe":
+        sg.popup("A password é: ", password)
